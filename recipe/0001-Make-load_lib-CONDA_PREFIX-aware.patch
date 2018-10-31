@@ -1,0 +1,43 @@
+From defc50c4fc803e2c231c15b9a51786cb29b7af6e Mon Sep 17 00:00:00 2001
+From: Jonathan Helmus <jjhelmus@gmail.com>
+Date: Wed, 31 Oct 2018 15:35:41 -0500
+Subject: [PATCH] Make load_lib() CONDA_PREFIX aware
+
+---
+ lib/Crypto/Util/_raw_api.py | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
+
+diff --git a/lib/Crypto/Util/_raw_api.py b/lib/Crypto/Util/_raw_api.py
+index c76e5a1..a90b6f9 100644
+--- a/lib/Crypto/Util/_raw_api.py
++++ b/lib/Crypto/Util/_raw_api.py
+@@ -29,6 +29,7 @@
+ # ===================================================================
+ 
+ import abc
++import os
+ import sys
+ from Crypto.Util.py3compat import byte_string
+ from Crypto.Util._file_system import pycryptodome_filename
+@@ -164,7 +165,17 @@ except ImportError:
+         import platform
+         bits, linkage = platform.architecture()
+         if "." not in name and not linkage.startswith("Win"):
+-            full_name = find_library(name)
++            _name = name
++            if 'lib' not in _name:
++                _name = 'lib' + _name
++            if sys.platform == 'darwin':
++                _name += '.dylib'
++            elif sys.platform.startswith('linux'):
++                _name += '.so'
++            full_name = os.path.join(os.environ['CONDA_PREFIX'], 'lib', _name)
++            # If not found in $CONDA_PREFIX/lib, find it via ctypes.util
++            if not os.path.isfile(full_name):
++                full_name = find_library(name)
+             if full_name is None:
+                 raise OSError("Cannot load library '%s'" % name)
+             name = full_name
+-- 
+2.7.4
+
