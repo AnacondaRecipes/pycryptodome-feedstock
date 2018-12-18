@@ -1,5 +1,5 @@
 {% set name = "pycryptodome" %}
-{% set version = "3.7.0" %}
+{% set version = "3.7.2" %}
 
 package:
   name: "{{ name|lower }}"
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 4444a26fc3830c0d438bca6975ff10d1eb9c0b88f747fdc25b5ab81fb46713d7
+  sha256: f5fc7e3b2d29552f0383063408ce2bd295e9d3c7ef13377599aa300a3d2baef7
   patches:
     - 0001-Make-load_lib-CONDA_PREFIX-aware.patch
 
