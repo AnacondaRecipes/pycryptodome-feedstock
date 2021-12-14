@@ -19,6 +19,9 @@ build:
 requirements:
   build:
     - {{ compiler('c') }}
+    - m2-patch  # [win]
+    - patch  # [not win]
+    - git
   host:
     - pip
     - python
