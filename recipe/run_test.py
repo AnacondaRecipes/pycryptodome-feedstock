@@ -1,11 +1,9 @@
 from Crypto.Random import random
 
 
-def test_pycrptodome_pkg():
+def test_pycryptodome_pkg():
     """
-    Tests to validate the pycrpto pkg.
-    NOTE: Given test validations will fail on python >3.8 version since pycrpto pkg discontinued to support
-    py>3.8 versions
+    Tests to validate the pycrptodome pkg.
     """
     print("Validating pycryptodome package")
     #  Returns  an integer <=a and <=b
@@ -19,4 +17,5 @@ def test_pycrptodome_pkg():
     output_3 = random.choice(list1)
     assert output_3 in list1, "Failed to assert the random number from list Returned value is not in the list "
 
-test_pycrptodome_pkg()
+
+test_pycryptodome_pkg()
