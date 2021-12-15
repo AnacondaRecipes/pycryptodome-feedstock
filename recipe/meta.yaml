@@ -12,21 +12,31 @@ source:
     - 0001-Make-load_lib-CONDA_PREFIX-aware.patch
 
 build:
-  number: 0
+  number: 1
   script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv "
   ignore_run_exports:
     - gmp  # [not win]
 requirements:
   build:
     - {{ compiler('c') }}
+    - m2-patch  # [win]
+    - patch  # [not win]
+    - git
   host:
     - pip
     - python
     - gmp   # [not win]
+    - setuptools
+    - wheel
   run:
     - python
     - gmp   # [not win]
 test:
+  requires:
+    - pytest
+    - pip
+  commands:
+    - pip check
   imports:
     - Crypto
     - Crypto.Cipher
@@ -51,7 +61,7 @@ test:
 
 about:
   home: http://www.pycryptodome.org
-  license: BSD
+  license: BSD-2-Clause
   license_family: BSD
   license_file: LICENSE.rst
   summary: Cryptographic library for Python
