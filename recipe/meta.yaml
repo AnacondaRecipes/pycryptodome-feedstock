@@ -6,7 +6,7 @@ package:
   version: "{{ version }}"
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.zip
   sha256: 12c7343aec5a3b3df5c47265281b12b611f26ec9367b6129199d67da54b768c1
   patches:
     - 0001-Make-load_lib-CONDA_PREFIX-aware.patch
