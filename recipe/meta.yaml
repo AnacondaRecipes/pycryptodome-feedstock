@@ -12,7 +12,7 @@ source:
     - 0001-Make-load_lib-CONDA_PREFIX-aware.patch
 
 build:
-  number: 0
+  number: 1
   script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv --no-build-isolation
   ignore_run_exports:
     - gmp  # [not win]
