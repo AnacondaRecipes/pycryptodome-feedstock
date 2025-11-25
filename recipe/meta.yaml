@@ -1,13 +1,13 @@
 {% set name = "pycryptodome" %}
-{% set version = "3.21.0" %}
+{% set version = "3.23.0" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: f7787e0d469bdae763b876174cf2e6c0f7be79808af26b1da96f1a64bcf47297
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 447700a657182d60338bab09fdb27518f8856aecd80ae4c6bdddb67ff5da44ef
   patches:
     - 0001-Make-load_lib-CONDA_PREFIX-aware.patch
 
@@ -22,16 +22,16 @@ requirements:
     - {{ compiler('c') }}
     - m2-patch  # [win]
     - patch  # [not win]
-    - git    # [not win]
+    - git  # [not win]
   host:
     - pip
     - python
-    - gmp   # [not win]
+    - gmp  # [not win]
     - setuptools
-    - wheel
+    - crypto
   run:
     - python
-    - gmp   # [not win]
+    - gmp  # [not win]
 
 test:
   requires:
