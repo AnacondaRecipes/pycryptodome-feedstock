@@ -1,27 +1,20 @@
-From defc50c4fc803e2c231c15b9a51786cb29b7af6e Mon Sep 17 00:00:00 2001
+From cf3a7592205219ba5b0aefd326766f2aa58d8c09 Mon Sep 17 00:00:00 2001
 From: Jonathan Helmus <jjhelmus@gmail.com>
 Date: Wed, 31 Oct 2018 15:35:41 -0500
-Subject: [PATCH] Make load_lib() CONDA_PREFIX aware
+Subject: [PATCH] [PATCH] Make load_lib() CONDA_PREFIX aware
 
+Co-authored-by: Jaida Rice <jrice@anaconda.com>
 ---
- lib/Crypto/Util/_raw_api.py | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ lib/Crypto/Util/_raw_api.py | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
 diff --git a/lib/Crypto/Util/_raw_api.py b/lib/Crypto/Util/_raw_api.py
-index c76e5a1..a90b6f9 100644
+index 072c6f69..54765d23 100644
 --- a/lib/Crypto/Util/_raw_api.py
 +++ b/lib/Crypto/Util/_raw_api.py
-@@ -29,6 +29,7 @@
- # ===================================================================
- 
- import abc
-+import os
- import sys
- from Crypto.Util.py3compat import byte_string
- from Crypto.Util._file_system import pycryptodome_filename
-@@ -164,7 +165,17 @@ except ImportError:
-         import platform
-         bits, linkage = platform.architecture()
+@@ -283,7 +283,17 @@ except ImportError:
+             cached_architecture[:] = platform.architecture()
+         _bits, linkage = cached_architecture
          if "." not in name and not linkage.startswith("Win"):
 -            full_name = find_library(name)
 +            _name = name
@@ -39,5 +32,5 @@ index c76e5a1..a90b6f9 100644
                  raise OSError("Cannot load library '%s'" % name)
              name = full_name
 -- 
-2.7.4
+2.47.3
 
