@@ -8,14 +8,10 @@ package:
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: 3fff8aab4d99b0295729f011d0f7226b3de59d70a5fb9232b61d3b950c6c8da6
-  patches:
-    - 0001-Make-load_lib-CONDA_PREFIX-aware.patch
 
 build:
   number: 0
   script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv --no-build-isolation
-  ignore_run_exports:
-    - gmp  # [not win]
 
 requirements:
   build:
@@ -25,11 +21,9 @@ requirements:
   host:
     - pip
     - python
-    - gmp   # [not win]
     - setuptools
   run:
     - python
-    - gmp   # [not win]
 
 test:
   requires:
