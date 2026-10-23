@@ -23,7 +23,6 @@ requirements:
   build:
     - {{ stdlib('c') }}
     - {{ compiler('c') }}
-    - git    # [not win]
   host:
     - pip
     - python
