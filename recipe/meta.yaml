@@ -1,5 +1,5 @@
 {% set name = "pycryptodome" %}
-{% set version = "3.23.0" %}
+{% set version = "4.1.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,29 +7,28 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 447700a657182d60338bab09fdb27518f8856aecd80ae4c6bdddb67ff5da44ef
-  patches:
-    - 0001-Make-load_lib-CONDA_PREFIX-aware.patch
+  sha256: 3fff8aab4d99b0295729f011d0f7226b3de59d70a5fb9232b61d3b950c6c8da6
 
 build:
   number: 0
   script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv --no-build-isolation
-  ignore_run_exports:
-    - gmp  # [not win]
+  # Excludes Crypto.SelfTest per upstream's PYCRYPTODOME_NO_SELFTEST flag
+  # https://github.com/Legrandin/pycryptodome/blame/master/setup.py#L263-L265
+  # Keeps embedded certificates out of the shipped package
+  # Downstream imports of Crypto.SelfTest will fail.
+  env:
+    PYCRYPTODOME_NO_SELFTEST: 1
 
 requirements:
   build:
     - {{ stdlib('c') }}
     - {{ compiler('c') }}
-    - git    # [not win]
   host:
     - pip
     - python
-    - gmp   # [not win]
-    - setuptools
+    - setuptools >=77
   run:
     - python
-    - gmp   # [not win]
 
 test:
   requires:
@@ -46,23 +45,13 @@ test:
     - Crypto.Protocol
     - Crypto.PublicKey
     - Crypto.Random
-    - Crypto.SelfTest
-    - Crypto.SelfTest.Cipher
-    - Crypto.SelfTest.Hash
-    - Crypto.SelfTest.IO
-    - Crypto.SelfTest.Math
-    - Crypto.SelfTest.Protocol
-    - Crypto.SelfTest.PublicKey
-    - Crypto.SelfTest.Random
-    - Crypto.SelfTest.Signature
-    - Crypto.SelfTest.Util
     - Crypto.Signature
     - Crypto.Util
 
 about:
   home: https://www.pycryptodome.org
   license: BSD-2-Clause AND Unlicense
-  license_family: BSD
+  license_family: Other
   license_file: LICENSE.rst
   summary: Cryptographic library for Python
   description: |
