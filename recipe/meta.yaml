@@ -12,6 +12,12 @@ source:
 build:
   number: 0
   script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv --no-build-isolation
+  # Excludes Crypto.SelfTest per upstream's PYCRYPTODOME_NO_SELFTEST flag
+  # https://github.com/Legrandin/pycryptodome/blame/master/setup.py#L263-L265
+  # Keeps embedded certificates out of the shipped package
+  # Downstream imports of Crypto.SelfTest will fail.
+  env:
+    PYCRYPTODOME_NO_SELFTEST: 1
 
 requirements:
   build:
@@ -21,7 +27,7 @@ requirements:
   host:
     - pip
     - python
-    - setuptools
+    - setuptools >=77
   run:
     - python
 
